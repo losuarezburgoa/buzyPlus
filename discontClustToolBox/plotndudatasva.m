@@ -1,34 +1,28 @@
-## Copyright (C) 2018 Ludger O. Suarez-Burgoa
-## 
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+function [] = plotndudatasva (knNormEigVecCell, lCell, symbolSize)
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} plotndudatasva (@var{input1}, @var{input2})
+## @deftypefn {Function File} {@var{[]} =} plotndudatasva (@var{knNormEigVecCell},
+##   @var{lCell}, @var{symbolSize})
 ##
+## Description:
 ## For more than the three dimensions, it plots a CVA biplot under a Canonical 
 ## Variate Analysis (CVA); which is a biplot used in clustered data.
 ## See Gower.etal2011.book for more details (Chapter 4, page 145).
 ## The number of clusteres (number of dimension) to be displayed is limited to
 ## ten only, because more clusteres could be uncesessarily detailed.
 ##
-## @seealso{}
+## Input(s):
+## @var{knNormEigVecCell}, a (a x K) cell containing the eigen vectors.
+## @var{lCell}, a (1 x K) cell that contains the centers of the clusters obtaiend
+## by the kmeans statistical method.
+## @var{symbolSize}, a natural number that defines the size in pt of the symbols 
+## in the plot.
+##
+## @seealso{plotudata}
 ## @end deftypefn
 
-## Author: Ludger O. Suarez-Burgoa <ludger@ludger-Inspiron-3458>
+## Author: Ludger O. Suarez-Burgoa <losuarezb@unal.edu.co>
 ## Created: 2018-06-03
-
-function [] = plotndudatasva(knNormEigVecCell, lCell, symbolSize)
 
 display('Plot in K^n with n other than 2 or 3 is not presented!');
 display('I will develop the proper tool for displaying clustered data in K^n.');
@@ -42,8 +36,8 @@ if nargin < 3
 end
 
 K = length(knNormEigVecCell);
-if and(K <= 1, K > 10)
-  error('The dimension K should be greater than 1 and less than 11!');
+if and (K <= 1, K > 10)
+  error ('The dimension K should be greater than 1 and less than 11!');
 endif
 
 cent = zeros(K);
@@ -54,17 +48,17 @@ endfor
 kSymbCell = {'o', 'x', '^', '+', 'v', '.', '<', 'd', '>', '*'};
 kNameCell = cell(1, K);
 for i = 1 : K
-  kNameCell{i} = sprintf('Cluster %d', i);
+  kNameCell{i} = sprintf ('Cluster %d', i);
 endfor
 
 stringKwarks = '';
 for i = 1 : K
-  stringKwarks = strcat(stringKwarks, sprintf(', ''%s''', kNameCell{i}));
+  stringKwarks = strcat (stringKwarks, sprintf(', ''%s''', kNameCell{i}));
 endfor
 
 uNameCell = cell(1, K);
 for i = 1 : K
-  uNameCell{i} = sprintf('U_%d', i);
+  uNameCell{i} = sprintf ('U_%d', i);
 endfor
 
 # Plotting for the biplot.
@@ -93,3 +87,18 @@ endfor
 fclose(file_id);
 
 endfunction
+
+## Copyright (C) 2018 Ludger O. Suarez-Burgoa & Universidad Nacional de Colombia.
+## 
+## This program is free software; you can redistribute it and/or modify it
+## under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## (at your option) any later version.
+## 
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+## 
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.

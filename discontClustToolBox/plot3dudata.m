@@ -1,28 +1,30 @@
-## Copyright (C) 2018 Ludger O. Suarez-Burgoa
-## 
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+function [pltfig] = plot3dudata (knNormEigVecCell, lCell, symbolSize, ...
+    viewVec, kSymbCell)
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} plot3dudata (@var{input1}, @var{input2})
+## @deftypefn {Function File} {@var{pltfig} =} plot3dudata ...
+##    (@var{knNormEigVecCell}, @var{lCell}, @var{symbolSize}, @var{viewVec}, 
+##     @var{kSymbCell})
 ##
-## @seealso{}
+## Input(s):
+## @var{knNormEigVecCell}, a (a x K) cell containing the eigen vectors.
+## @var{lCell}, a (1 x K) cell that contains the centers of the clusters obtaiend
+## by the kmeans statistical method.
+## @var{symbolSize}, a natural number that defines the size in pt of the symbols 
+## in the plot.
+## @var{viewVec}, a (1 x 2) vector that contains the point of view of the 3D 
+## plot; same as used in the function @ff{view}; by dafault is [30, 20].
+## @var{kSymbCell}, a (1 x 3) cell with string that defines the symbols of each
+## K cluster; By default is {'o', 'x', '^'}.
+##
+## Output(s):
+## @var{pltfig} is a figure handle that contains all the plot.
+##
+## @seealso{plotudata}
 ## @end deftypefn
 
-## Author: Ludger O. Suarez-Burgoa <ludger@ludger-Inspiron-3458>
+## Author: Ludger O. Suarez-Burgoa <losuarezb@unal.edu.co>
 ## Created: 2018-06-03
-
-function [pltfig] = plot3dudata (knNormEigVecCell, lCell, symbolSize, viewVec, kSymbCell)
 
 K = length (knNormEigVecCell);
 if K ~= 3
@@ -83,3 +85,18 @@ axis equal
 hold off
 
 endfunction
+
+## Copyright (C) 2018 Ludger O. Suarez-Burgoa & Universidad Nacional de Colombia.
+## 
+## This program is free software; you can redistribute it and/or modify it
+## under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## (at your option) any later version.
+## 
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+## 
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.

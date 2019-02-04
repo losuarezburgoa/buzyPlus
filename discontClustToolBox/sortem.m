@@ -1,38 +1,48 @@
-## Copyright (C) 2018 Ludger O. Suarez-Burgoa
-## 
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+function [P2, D2] = sortem (P, D)
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} sortem (@var{input1}, @var{input2})
+## @deftypefn {} {@var{P2} @var{D2} =} sortem (@var{P}, @var{D})
 ##
-## @seealso{}
+## This function takes two matrices: @var{P} (the eigen vector orthonormal matrix) 
+## and @var{D} (the eigen value diagonal matrix), both obtained from the output 
+## of the @ff{eig} function, and then sorts the columns of @var{P} to 
+## match the sorted columns of @var{D} going from largest to smallest eigen values.
+##
+## @seealso{eig}
 ## @end deftypefn
 
-## Author: Ludger O. Suarez-Burgoa <ludger@ludgerWork>
-## Created: 2018-05-30
+## Author: Ludger O. Suarez-Burgoa @email{losuarezb@unal.edu.co}.
+## Created: 2018-05-30.
 
-function [P2,D2] = sortem(P, D)
-% this function takes in two matrices P and D, presumably the output 
-% from Matlab's eig function, and then sorts the columns of P to 
-% match the sorted columns of D (going from largest to smallest)
+## Make diagonal matrix out of sorted diagonal values of input D
+D2 = diag (sort (diag(D), 'descend')); 
 
-% Make diagonal matrix out of sorted diagonal values of input D
-D2 = diag(sort(diag(D), 'descend')); 
+## Store the indices of which columns the sorted eigenvalues come from
+[c, ind] = sort (diag(D), 'descend'); 
 
-% Store the indices of which columns the sorted eigenvalues come from
-[c, ind] = sort(diag(D), 'descend'); 
-
-% Arrange the columns in this order
-P2 = P(:,ind);
+## Arrange the columns in this order.
+P2 = P(:, ind);
 endfunction
+
+## Copyright (C) 2018 Ludger O. Suarez-Burgoa & Universidad Nacional de Colombia.
+## 
+## This program is free software; redistribution and use in source and
+## binary forms, with or without modification, are permitted provided that
+## the following conditions are met:
+## 
+##    1.Redistributions of source code must retain the above copyright
+##      notice, this list of conditions and the following disclaimer.
+##    2.Redistributions in binary form must reproduce the above copyright
+##      notice, this list of conditions and the following disclaimer in the
+##      documentation and/or other materials provided with the distribution.
+## 
+## THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+## ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+## IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+## ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+## FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+## DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+## OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+## HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+## LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+## OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+## SUCH DAMAGE.

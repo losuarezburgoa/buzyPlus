@@ -1,6 +1,6 @@
-function [ strikeDipVec ] = dipdirdip2strikedip( dipdirDipVec )
+function [strikeDipArray] = dipdirdip2strikedip (dipdirDipArray)
 %lsb code
-%[ strikeDipVec ] = dipdirdip2strikedip( dipdirDipVec )
+%[ strikeDipVec ] = dipdirdip2strikedip( dDirDipVec )
 %
 %Description:
 %Transforms the orientation of a plane given in dip-direction dip format
@@ -10,24 +10,32 @@ function [ strikeDipVec ] = dipdirdip2strikedip( dipdirDipVec )
 %prepareorientationangles
 %
 %Input(s):
-%Orientation of a plane given its dip direction and dip (dipdirDipVec)
+%Orientation of a plane given its dip direction and dip (dDirDipVec)
 %
 %Output(s):
 %Orientation of a plane by its strike and dio (strikeDipVec)
-%%%%%%%%%%%%%%%%%%%%%%%
-%[ strikeDipVec ] = dipdirdip2strikedip( dipdirDipVec )
+%
+%[strikeDipVec] = dipdirdip2strikedip (dDirDipVec)
 
-dipdirDipVec =prepareorientationangles( dipdirDipVec );
+numData = size (dipdirDipArray, 1);
+strikeDipArray = zeros (numData, 2);
+for i = 1 : numData
+    strikeDipArray(i, :) = ddd2s (dipdirDipArray(i,:)); 
+endfor
+endfunction
 
-strikeDipVec =zeros(1, 2);
-if dipdirDipVec(1) <90
-    strikeDipVec(1) =270 +dipdirDipVec(1);
-    strikeDipVec(2) =dipdirDipVec(2);
+
+function [strikeDipVec] = ddd2s (dDirDipVec)
+
+dDirDipVec = prepareorientationangles (dDirDipVec);
+
+strikeDipVec = zeros(1, 2);
+if dDirDipVec(1) < 90
+    strikeDipVec(1) = 270 + dDirDipVec(1);
+    strikeDipVec(2) = dDirDipVec(2);
 else
-    strikeDipVec(1) =dipdirDipVec(1) -90;
-    strikeDipVec(2) =dipdirDipVec(2);
-end
-
-
-end
+    strikeDipVec(1) = dDirDipVec(1) - 90;
+    strikeDipVec(2) = dDirDipVec(2);
+endif
+endfunction
 
